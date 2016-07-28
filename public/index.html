@@ -1,32 +1,24 @@
-<!DOCTYPE html>
+<!DOCtype HTML> 
 
 <html>
-
-	<head>
-		<title>Timestamp Microservice</title>
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="/public/main.css"/>
-	</head>
-
-	
-
-	<body>
-		<div class="container">
-			<h1>Timestamp Microservice</h1>
-			<hr/>
-			<p>Enter the date as the url parameter, either in normal english or as a Unix timestamp.</p>
-			<p id="example">
-				Example: <br/> 
-				https://backend-meankraken.c9users.io/January 1, 1970
-			</p>
-		
-		</div>
-		
-		<script type="text/javascript" src="common/main.js"></script>
-	</body>
-	
-	
-
+    <head>
+        <title>File Metadata Microservice</title>
+        
+        <link rel='stylesheet' href='bootstrap/bootstrap.min.css'/>
+        <link rel='stylesheet' href='public/main.css'/>
+          
+    </head>
+    
+    <body>
+        <p>Upload a file to determine the size.</p>
+        
+        <form method="post" action='/uploads' enctype='multipart/form-data'>
+            <input type="file" name="fileUpload" />
+            <input type="submit" class="theButton" value="Analyze"></button>
+            
+        </form>
+        
+    </body>
+    
+    
 </html>

@@ -4,87 +4,29 @@ global.jQuery = require('jquery');
 var jquery = require('jquery');
 var express = require('express');
 var session = require('express-session');
+var multer = require('multer');
+var upload = multer({dest: "uploads/"});
 
 
 var app = express();
 require('dotenv').load();
 
-var months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
-
-
 var path = process.cwd();
-
-
 
 app.use('/common', express.static(process.cwd() + '/app/common'));
 app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/bootstrap', express.static(process.cwd() + '/node_modules/bootstrap/dist/css'));
+app.use('/uploads', express.static(process.cwd() +  '/uploads'));
 
-app.get('/',function(req,res,next) {
+app.get('/', function(req,res) {
 	res.sendFile(path + "/public/index.html");
-
 });
 
-app.get('/:id',function(req,res) {
-	var isDate = false;
-	var date = req.params.id; 
-	var month = "";
-	var year = 0;
-	var day = 0;
-	var dateStr = "";
-	for (var i=0; i<months.length; i++) {
-		if (date.toUpperCase().includes(months[i])) {
-			isDate = true;
-			var arr = months[i].toLowerCase().split("");
-			arr[0] = arr[0].toUpperCase();
-			month = arr.join("");
-		}
-	}
-	if (isDate) {
-		if (date.match(/(\d)+/g)) {
-			var nums = date.match(/(\d)+/g);
-			if (nums.length<2) {
-				isDate = false;
-			}
-			else {
-				var num1 = parseInt(nums[0]);
-				var num2 = parseInt(nums[1]);
-				if (num1 < num2) {
-					day = num1;
-					year = num2;
-				}
-				else {
-					day = num2;
-					year = num1;
-				}
-				if (day<=31) {
-				dateStr = month + " " + day + ", " + year;
-				var dateVar = new Date(dateStr);
-				var reply = { 
-					unix: dateVar.getTime()/1000,
-					natural: dateStr 
-				};
-				res.send(reply);
-				}
-				else {
-					isDate = false;
-				}
-			}
-		
-		}
-		else {
-			isDate = false;
-		}
-		
-	}
-	if (!isDate) {
-		res.send("Please enter a valid date - include the month, day, and year.");
-	}
-	
-	
-	
-});
-
-
+app.post('/uploads', upload.single('fileUpload'), function (req, res, next) {
+  var size = req.file.size; 
+  var ret = { size: size };
+  res.end(JSON.stringify(ret));
+})
 
 app.use(session({
 	secret: 'secretClementine',
