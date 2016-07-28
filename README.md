@@ -1,3 +1,3 @@
 ##### Clementine.js FCC Boilerplate
 
-# Timestamp service - input a natural language or unix date. 
+# Filesize microservice - returns the filesize of a user's upload. 
